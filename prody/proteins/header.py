@@ -335,7 +335,7 @@ def getHeaderDict(stream, *keys):
             return tuple(keys), loc
     else:
         header = {}
-        for key, func in _PDB_HEADER_MAP.items():  # PY3K: OK
+        for key, func in list(_PDB_HEADER_MAP.items()):  # PY3K: OK
             value = func(lines)
             if value is not None:
                 header[key] = value
@@ -598,7 +598,7 @@ def _getPolymers(lines):
         LOGGER.warn('DBREF1 and DBREF1 records are not complete')
         dbref12 = []
     else:
-        dbref12 = zip(dbref1, dbref2)  # PY3K: OK
+        dbref12 = list(zip(dbref1, dbref2))  # PY3K: OK
 
     for dbref1, dbref2 in dbref12:
         i, line = dbref1
@@ -650,7 +650,7 @@ def _getPolymers(lines):
         polymers[ch] = poly
         poly.dbrefs.append(dbref)
 
-    for poly in polymers.values():  # PY3K: OK
+    for poly in list(polymers.values()):  # PY3K: OK
         resnum = []
         for dbref in poly.dbrefs:
             dbabbr = dbref.dbabbr
@@ -810,22 +810,22 @@ def _getChemicals(lines):
         chem = line[12:15].strip()
         chem_formulas[chem] += line[18:70].rstrip()
 
-    for chem, name in chem_names.items():  # PY3K: OK
+    for chem, name in list(chem_names.items()):  # PY3K: OK
         name = cleanString(name)
         for chem in chemicals[chem]:
             chem.name = name
-    for chem, formula in chem_formulas.items():  # PY3K: OK
+    for chem, formula in list(chem_formulas.items()):  # PY3K: OK
         formula = cleanString(formula)
         for chem in chemicals[chem]:
             chem.formula = formula
-    for chem, synonyms in chem_synonyms.items():  # PY3K: OK
+    for chem, synonyms in list(chem_synonyms.items()):  # PY3K: OK
         synonyms = cleanString(synonyms)
         synonyms = synonyms.split(';')
         for chem in chemicals[chem]:
             chem.synonyms = synonyms
 
     alist = []
-    for chem in chemicals.values():  # PY3K: OK
+    for chem in list(chemicals.values()):  # PY3K: OK
         for chem in chem:
             alist.append(chem)
     return alist
@@ -966,13 +966,13 @@ def assignSecstr(header, atoms, coil=False):
     hierview = atoms.getHierView()
     count = 0
     getResidue = hierview.getResidue
-    for key, value in helix.items():  # PY3K: OK
+    for key, value in list(helix.items()):  # PY3K: OK
         res = getResidue(*key)
         if res is None:
             continue
         res.setSecstrs(mapHelix[value[0]])
         count += 1
-    for key, res in sheet.items():  # PY3K: OK
+    for key, res in list(sheet.items()):  # PY3K: OK
         res = getResidue(*key)
         if res is None:
             continue

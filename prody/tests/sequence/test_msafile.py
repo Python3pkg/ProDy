@@ -4,7 +4,7 @@ from prody.tests import TestCase
 import os
 from os.path import join
 try:
-    from StringIO import StringIO
+    from io import StringIO
 except ImportError:
     from io import StringIO
 

@@ -14,8 +14,8 @@ if PY3K:
     import urllib.parse as urllib
     import urllib.request as urllib2
 else:
-    import urllib
-    import urllib2
+    import urllib.request, urllib.parse, urllib.error
+    import urllib.request, urllib.error, urllib.parse
 
 __all__ = ['searchPfam', 'fetchPfamMSA', 'searchUniprotID']
 
@@ -75,10 +75,10 @@ def searchPfam(query, **kwargs):
             raise ValueError(repr(seq) + ' is not a valid sequence')
         fseq = '>Seq\n' + seq
         parameters = { 'hmmdb' : 'pfam', 'seq': fseq }
-        enc_params = urllib.urlencode(parameters).encode('utf-8')
-        request = urllib2.Request('http://www.ebi.ac.uk/Tools/hmmer/search/hmmscan', enc_params)
+        enc_params = urllib.parse.urlencode(parameters).encode('utf-8')
+        request = urllib.request.Request('http://www.ebi.ac.uk/Tools/hmmer/search/hmmscan', enc_params)
 
-        url = ( urllib2.urlopen(request).geturl() + '?output=xml') 
+        url = ( urllib.request.urlopen(request).geturl() + '?output=xml') 
         LOGGER.debug('Submitted Pfam search for sequence "{0}...".'
                      .format(seq[:MINSEQLEN]))
 
@@ -196,10 +196,10 @@ def searchPfam(query, **kwargs):
             raise ValueError('{0} does not match pfam accession'
                              ' format'.format(accession))
 
-        match = matches.setdefault(accession, dict(child.items()))
+        match = matches.setdefault(accession, dict(list(child.items())))
         locations = match.setdefault('locations', [])
         for loc in child:
-            locations.append(dict(loc.items()))
+            locations.append(dict(list(loc.items())))
 
     if len(seq) < MINSEQLEN:
         query = 'Query ' + repr(query)

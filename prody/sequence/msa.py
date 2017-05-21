@@ -234,7 +234,7 @@ class MSA(object):
             return count
         else:
             count = len(self._mapping)
-            for val in self._mapping.values():
+            for val in list(self._mapping.values()):
                 try:
                     count += len(val) - 1
                 except TypeError:

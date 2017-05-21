@@ -265,8 +265,8 @@ def buildSolvShell(protein, W, X, Y, Z, closest_dist, thickness, wDNA, wRNA, wPR
     if(pdb_flag==1):
         fout_pdb = open(pdb_out_file, "w");
         for i in range (0, atom_count):
-            print >>fout_pdb, "ATOM %6d %4s %3s %1d%4d    %8.3f%8.3f%8.3f" \
-                %((i+1), atom[i], cgatom[i], mol_type[i],(i+1), X[i], Y[i], Z[i]) 
+            print("ATOM %6d %4s %3s %1d%4d    %8.3f%8.3f%8.3f" \
+                %((i+1), atom[i], cgatom[i], mol_type[i],(i+1), X[i], Y[i], Z[i]), file=fout_pdb) 
 
 
     water_count=1
@@ -296,8 +296,8 @@ def buildSolvShell(protein, W, X, Y, Z, closest_dist, thickness, wDNA, wRNA, wPR
                         if(min_dist > closest_dist_plus_thickness_sqrd): continue
 
                         if(pdb_flag ==1):
-                            print >>fout_pdb,"ATOM %6d  OW  %3s %1d%4d    %8.3f%8.3f%8.3f" \
-                            %(water_count, cgatom[atom_count+water_count-1], mtype, water_count, x, y, z)
+                            print("ATOM %6d  OW  %3s %1d%4d    %8.3f%8.3f%8.3f" \
+                            %(water_count, cgatom[atom_count+water_count-1], mtype, water_count, x, y, z), file=fout_pdb)
 
                         water_count+=1
 
@@ -697,7 +697,7 @@ def showChivsFrames(chi_list, frames_list, numFrames=20):
     
     linestyles = ['-', '-.','--', ':']
     numModes=len(chi_list)/(numFrames+1)
-    print("@> Number of modes in chi list is %d"%numModes)
+    print(("@> Number of modes in chi list is %d"%numModes))
     for i in range (0, numModes):
         pyplot.plot(frames_list[(i*(numFrames+1)):((i+1)*(numFrames+1))], \
                     chi_list[(i*(numFrames+1)):((i+1)*(numFrames+1))], \
@@ -722,7 +722,7 @@ def writeChivsFrames(chi_list, frames_list, outChiFile, numFrames=20):
     
     linestyles = ['-', '-.','--', ':']
     numModes=len(chi_list)/(numFrames+1)
-    print("@> Number of modes in chi list is %d"%numModes)
+    print(("@> Number of modes in chi list is %d"%numModes))
     for i in range (0, numModes):
         pyplot.plot(frames_list[(i*(numFrames+1)):((i+1)*(numFrames+1))], \
                     chi_list[(i*(numFrames+1)):((i+1)*(numFrames+1))], \

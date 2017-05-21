@@ -230,7 +230,7 @@ class HiC(object):
         of :func:`.showMap`."""
 
         dm_kwargs = {}
-        keys = kwargs.keys()
+        keys = list(kwargs.keys())
         for k in keys:
             if k.startswith('dm_'):
                 dm_kwargs[k[3:]] = kwargs.pop(k)
@@ -382,7 +382,7 @@ def loadHiC(filename):
     attr_dict = np.load(filename)
     hic = HiC()
 
-    keys = attr_dict.keys()
+    keys = list(attr_dict.keys())
 
     for k in keys:
         val = attr_dict[k]

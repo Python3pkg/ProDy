@@ -141,10 +141,10 @@ def getPackagePath():
         update = True
     if update:
         default = os.path.join(USERHOME, '.' + pkg.SETTINGS._package)
-        path = input('Please specify a folder for storing {0} data '
+        path = eval(input('Please specify a folder for storing {0} data '
                      '(press enter for "{1}"):'
-                     .format(pkg.SETTINGS._package, default)) or default
+                     .format(pkg.SETTINGS._package, default))) or default
         while not setPackagePath(path):
-            path = input('Please specify a valid folder name with write '
-                         'access:')
+            path = eval(input('Please specify a valid folder name with write '
+                         'access:'))
     return path

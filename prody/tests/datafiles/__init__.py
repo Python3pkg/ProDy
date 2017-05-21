@@ -153,7 +153,7 @@ def parseDatafile(filename, **kwargs):
     return PARSERS[splitext(fn)[1]](fn, **kwargs)
 
 
-for name, value in DATA_FILES.items():
+for name, value in list(DATA_FILES.items()):
     value['path'] = pathDatafile(value['file'])
 
 
@@ -163,7 +163,7 @@ class TestDatafiles(TestCase):
 
     pass
 
-for name, value in DATA_FILES.items():
+for name, value in list(DATA_FILES.items()):
     fn = value['file']
     def func(self, filename=fn, **kwargs):
 

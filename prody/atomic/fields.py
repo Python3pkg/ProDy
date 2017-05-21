@@ -248,7 +248,7 @@ for key in keys:
         sel = "\n      ``'" + "'``,\n      ``'".join(field.selstr) + "'``"
         __doc__ += '\n\n      *E.g.:* ' + sel
 
-for key in FLAG_FIELDS.keys():
+for key in list(FLAG_FIELDS.keys()):
     ATOMIC_FIELDS[key].flags = True
 
 

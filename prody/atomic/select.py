@@ -452,8 +452,8 @@ try:
     from . import pyparsing as pp
     from .pyparsing import ParseException
 except ImportError:
-    import pyparsing as pp
-    from pyparsing import ParseException
+    from . import pyparsing as pp
+    from .pyparsing import ParseException
 
 
 from prody import LOGGER, SETTINGS, PY2K
@@ -484,9 +484,9 @@ def debug(sel, loc, *args):
     if DEBUG:
         print('')
         if args:
-            print(args[0], args[1:])
-        print(repr(sel))
-        print(' ' * (loc + 1) + '^')
+            print((args[0], args[1:]))
+        print((repr(sel)))
+        print((' ' * (loc + 1) + '^'))
 
 __all__ = ['Select', 'SelectionError', 'SelectionWarning',
            'defSelectionMacro', 'delSelectionMacro', 'getSelectionMacro',
@@ -576,7 +576,7 @@ def replaceMacros(selstr):
     if MACROS_REGEX is None: MACROS_REGEX = {}
     selstr = ' ' + selstr + ' '
     if MACROS:
-        for name, macro in MACROS.items(): # PY3K: OK
+        for name, macro in list(MACROS.items()): # PY3K: OK
             re = MACROS_REGEX.setdefault(name,
                 re_compile('[( )]' + name + '[( )]'))
 
@@ -906,7 +906,7 @@ class Select(object):
                 selstr = 'index {0}'.format(rangeString(indices))
             else:
                 if self._replace:
-                    for key, value in kwargs.items(): # PY3K: OK
+                    for key, value in list(kwargs.items()): # PY3K: OK
                         if value in ag and key in selstr:
                             if value == ag:
                                 ss = 'all'
@@ -959,7 +959,7 @@ class Select(object):
 
         self._reset()
 
-        for key in kwargs.keys():
+        for key in list(kwargs.keys()):
             if not key.isalnum():
                 raise TypeError('{0} is not a valid keyword argument, '
                                   'keywords must be all alpha numeric '
@@ -975,7 +975,7 @@ class Select(object):
         self._selstr = selstr
         self._kwargs = kwargs
 
-        if DEBUG: print('getBoolArray', selstr)
+        if DEBUG: print(('getBoolArray', selstr))
 
         self._evalAtoms(atoms)
 
@@ -1016,7 +1016,7 @@ class Select(object):
 
             raise SelectionError(selstr, err.column, msg + '\n' + str(err))
         else:
-            if DEBUG: print('_evalSelstr', tokens)
+            if DEBUG: print(('_evalSelstr', tokens))
             torf = tokens[0]
 
         if not isinstance(torf, ndarray):
@@ -1024,11 +1024,11 @@ class Select(object):
             raise SelectionError(selstr)
         elif torf.dtype != bool:
             if DEBUG:
-                print('_select torf.dtype', torf.dtype, isinstance(torf.dtype,
-                                                                   bool))
+                print(('_select torf.dtype', torf.dtype, isinstance(torf.dtype,
+                                                                   bool)))
             raise SelectionError(selstr)
         if DEBUG:
-            print('_select', torf)
+            print(('_select', torf))
         return torf
 
     def _getParser(self, selstr):
@@ -1571,7 +1571,7 @@ class Select(object):
     def _within(self, sel, loc, tokens):
         """Perform distance based selection."""
 
-        if DEBUG: print('_within', tokens)
+        if DEBUG: print(('_within', tokens))
         label, which = tokens
         within = label[1]
         label = ' '.join(label)
@@ -1877,7 +1877,7 @@ class Select(object):
             right, err = self._getNumeric(sel, loc, tokens.pop(0))
             if err: raise err
 
-            if DEBUG: print(binop, left, right)
+            if DEBUG: print((binop, left, right))
             if binop == '/' and any(right == 0.0):
                 raise SelectionError(sel, loc, 'zero division error')
             binop = OPERATORS[binop]
@@ -2298,9 +2298,9 @@ class Select(object):
             icode, err = self._getData(sel, loc, 'icode')
             if err: return None, err
             if subset is None:
-                rnic = zip(resnums, icode) # PY3K: OK
+                rnic = list(zip(resnums, icode)) # PY3K: OK
             else:
-                rnic = zip(resnums[subset], icode[subset]) # PY3K: OK
+                rnic = list(zip(resnums[subset], icode[subset])) # PY3K: OK
 
             if torf is None:
                 torf = array([val in wicode for val in rnic], bool)

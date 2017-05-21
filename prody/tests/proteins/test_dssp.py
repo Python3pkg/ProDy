@@ -39,7 +39,7 @@ class TestDSSPFunctions(unittest.TestCase):
                     dssp_resnum = res.getData("dssp_resnum")[0]
                     dssp_dict[dssp_resnum] = res
 
-            for res in dssp_dict.values():
+            for res in list(dssp_dict.values()):
                 bp1 = res.getData("dssp_bp1")[0]
                 bp2 = res.getData("dssp_bp2")[0]
 

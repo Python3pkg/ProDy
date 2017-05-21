@@ -104,10 +104,10 @@ def view3D(*alist, **kwargs):
     of frames to animate over), amplitude (scaling factor), and animate
     (3Dmol.js animate options).
     """
-    import StringIO, py3Dmol
-    from pdbfile import writePDBStream
+    import io, py3Dmol
+    from .pdbfile import writePDBStream
     
-    pdb = StringIO.StringIO()
+    pdb = io.StringIO()
     
     for atoms in alist:
         writePDBStream(pdb, atoms)
@@ -244,7 +244,7 @@ def showProtein(*atoms, **kwargs):
         cnames = dict(colors.cnames)
         wcolor = kwargs.get('water', 'red').lower()
         avoid = np.array(colors.hex2color(cnames.pop(wcolor, cnames.pop('red'))))
-        for cn, val in cnames.copy().items():  # PY3K: OK
+        for cn, val in list(cnames.copy().items()):  # PY3K: OK
             clr = np.array(colors.hex2color(val))
             if clr.sum() > 2.4:
                 cnames.pop(cn)

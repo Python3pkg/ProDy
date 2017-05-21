@@ -202,9 +202,9 @@ def showOccupancies(pdbensemble, *args, **kwargs):
 def checkWeights(weights, n_atoms, n_csets=None):
     """Returns weights if checks pass, otherwise raise an exception."""
 
-    assert isinstance(n_atoms, int) or isinstance(n_atoms, long) and n_atoms > 0, \
+    assert isinstance(n_atoms, int) or isinstance(n_atoms, int) and n_atoms > 0, \
         'n_atoms must be a positive integer'
-    assert n_csets is None or isinstance(n_csets, int) or isinstance(n_atoms, long) and n_csets > 0, \
+    assert n_csets is None or isinstance(n_csets, int) or isinstance(n_atoms, int) and n_csets > 0, \
         'n_csets must be a positive integer'
 
     if not isinstance(weights, np.ndarray):
@@ -304,7 +304,7 @@ def alignPDBEnsemble(ensemble, suffix='_aligned', outdir='.', gzip=False):
             writePDB(outfn, ag)
         output.append(os.path.normpath(outfn))
 
-    for pdb, ag in pdbdict.items():  # PY3K: OK
+    for pdb, ag in list(pdbdict.items()):  # PY3K: OK
         writePDB(os.path.join(outdir, pdb + suffix + '.pdb' + gzip), ag)
     if len(output) == 1:
         return output[0]

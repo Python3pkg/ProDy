@@ -609,11 +609,11 @@ def calcPerturbResponse(model, atoms=None, repeats=100, **kwargs):
             return response_matrix
 
     if atoms is not None: 
-        atoms.setData('prs_profile', matrix_dict[matrix_dict.keys()[0]])
-        if len(matrix_dict.keys()) > 1:
+        atoms.setData('prs_profile', matrix_dict[list(matrix_dict.keys())[0]])
+        if len(list(matrix_dict.keys())) > 1:
             LOGGER.info('Only one matrix can be added as data to atoms so' \
                         ' the first one was chosen. The operation that generated' \
-                        ' it was {0} (1st 3 letters).'.format(matrix_dict.keys()[0]))
+                        ' it was {0} (1st 3 letters).'.format(list(matrix_dict.keys())[0]))
 
     saveOrig = kwargs.get('saveOrig',False)
     saveMatrix = kwargs.get('saveMatrix',False)
@@ -623,14 +623,14 @@ def calcPerturbResponse(model, atoms=None, repeats=100, **kwargs):
 
     if saveOrig == True or saveMatrix == True and normMatrix == False:
        # save the original PRS matrix for each operation
-       for m in matrix_dict.keys():
+       for m in list(matrix_dict.keys()):
            np.savetxt('orig_{0}_{1}.txt'.format(baseSaveName,m), \
                       matrix_dict[m], delimiter='\t', fmt='%8.6f')
     
     if normMatrix == True:
         norm_PRS_mat = {}
         # calculate the normalized PRS matrix for each operation
-        for m in matrix_dict.keys():
+        for m in list(matrix_dict.keys()):
             self_dp = np.diag(matrix_dict[m])  # using self displacement (diagonal of
                                               # the original matrix) as a
                                               # normalization factor
@@ -650,7 +650,7 @@ def calcPerturbResponse(model, atoms=None, repeats=100, **kwargs):
                   '_prody_prs_all')
 
     matrix_list = []
-    for m in matrix_dict.keys():
+    for m in list(matrix_dict.keys()):
         if normMatrix == True:
             matrix_list.append(norm_PRS_mat[m])
         else:
@@ -976,7 +976,7 @@ def calcPairDeformationDist(model, coords, ind1, ind2, kbt=1.):
     ind1 = ind1 - resnum_list[0]
     ind2 = ind2 - resnum_list[0]
 
-    for m in xrange(6,n_modes):
+    for m in range(6,n_modes):
         U_ij_k = [(eigvecs[ind1*3][m] - eigvecs[ind2*3][m]), (eigvecs[ind1*3+1][m] \
             - eigvecs[ind2*3+1][m]), (eigvecs[ind1*3+2][m] - eigvecs[ind2*3+2][m])] 
         D_ij_k = abs(np.sqrt(kbt/eigvals[m])*(np.vdot(r_ij_norm[ind1][ind2], U_ij_k)))  

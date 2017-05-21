@@ -117,7 +117,7 @@ def checkTypes(args, **types):
             checkTypes(locals(), n=(float, int), i=(float, int))
             return n + i"""
 
-    for arg, allowed in types.items():
+    for arg, allowed in list(types.items()):
         if arg in args and not isinstance(args[arg], types[arg]):
 
             val = args[arg]

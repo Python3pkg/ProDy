@@ -425,7 +425,7 @@ def matchAlign(mobile, target, **kwargs):
         selstr = 'calpha'
 
     if kwargs.get('allcets', True):
-        csets = range(mobile.numCoordsets())  # PY3K: OK
+        csets = list(range(mobile.numCoordsets()))  # PY3K: OK
     else:
         csets = [mobile.getACSIndex()]
 

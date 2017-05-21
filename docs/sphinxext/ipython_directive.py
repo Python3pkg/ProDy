@@ -57,7 +57,7 @@ Authors
 #-----------------------------------------------------------------------------
 
 # Stdlib
-import cStringIO
+import io
 import os
 import re
 import sys
@@ -88,7 +88,7 @@ from IPython.utils import io
 # Globals
 #-----------------------------------------------------------------------------
 # for tokenizing blocks
-COMMENT, INPUT, OUTPUT =  range(3)
+COMMENT, INPUT, OUTPUT =  list(range(3))
 
 #-----------------------------------------------------------------------------
 # Functions and class declarations
@@ -192,7 +192,7 @@ class EmbeddedSphinxShell(object):
 
     def __init__(self):
 
-        self.cout = cStringIO.StringIO()
+        self.cout = io.StringIO()
 
 
         # Create config object for IPython
@@ -483,8 +483,8 @@ class EmbeddedSphinxShell(object):
             if i in node_starts:
                 if output and not output[-1].startswith('@'):
                     output.append('')
-                output.append(u"%s %s" % (fmtin % ct, line))
-                continuation = u'   %s:' % ('.' * (len(str(ct)) + 2))
+                output.append("%s %s" % (fmtin % ct, line))
+                continuation = '   %s:' % ('.' * (len(str(ct)) + 2))
                 ct += 1
                 i += 1
                 while i < len(content) and i not in node_starts:
@@ -492,7 +492,7 @@ class EmbeddedSphinxShell(object):
                     if line:
                         if line[0] in '#!':
                             output.append('')
-                            output.append(u"%s %s" % (fmtin % ct, line))
+                            output.append("%s %s" % (fmtin % ct, line))
                             ct += 1
                             i += 1
                             break
@@ -502,7 +502,7 @@ class EmbeddedSphinxShell(object):
                             i += 1
                             break
 
-                    output.append(u'%s%s' % (continuation, line))
+                    output.append('%s%s' % (continuation, line))
                     i += 1
                     if i in node_starts:
                         break
@@ -649,7 +649,7 @@ class IpythonDirective(Directive):
         #print lines
         if len(lines)>2:
             if debug:
-                print '\n'.join(lines)
+                print('\n'.join(lines))
             else: #NOTE: this raises some errors, what's it for?
                 #print 'INSERTING %d lines'%len(lines)
                 self.state_machine.insert_input(
@@ -826,4 +826,4 @@ if __name__=='__main__':
     if not os.path.isdir('_static'):
         os.mkdir('_static')
     test()
-    print 'All OK? Check figures in _static/'
+    print('All OK? Check figures in _static/')

@@ -162,7 +162,7 @@ class AtomSubset(AtomPointer):
         flags[self._indices] = value
 
 
-for fname, field in ATOMIC_FIELDS.items():
+for fname, field in list(ATOMIC_FIELDS.items()):
 
     if field.private:
         continue

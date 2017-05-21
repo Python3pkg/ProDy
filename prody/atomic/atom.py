@@ -241,7 +241,7 @@ class Atom(AtomPointer):
             yield Atom(ag, other, acsi)
 
 
-for fname, field in ATOMIC_FIELDS.items():
+for fname, field in list(ATOMIC_FIELDS.items()):
 
     if field.private:
         continue

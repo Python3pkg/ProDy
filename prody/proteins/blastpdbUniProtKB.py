@@ -73,7 +73,7 @@ def blastPDBUniProtKB(sequence, filename=None, **kwargs):
         import urllib.parse
         urlencode = lambda data: bytes(urllib.parse.urlencode(data), 'utf-8')
     except ImportError:
-        from urllib import urlencode
+        from urllib.parse import urlencode
 
     url = 'https://blast.ncbi.nlm.nih.gov/Blast.cgi'
 

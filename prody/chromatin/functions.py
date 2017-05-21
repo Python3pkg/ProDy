@@ -166,7 +166,7 @@ def showEmbedding(modes, labels=None, trace=True, headtail=True, cmap='prism'):
         la = importLA()
 
         X, Y = V[:,:2].T
-        R = np.array(range(len(X)))
+        R = np.array(list(range(len(X))))
         R = R / la.norm(R)
         X *= R; Y *= R
         

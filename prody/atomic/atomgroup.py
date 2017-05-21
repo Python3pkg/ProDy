@@ -570,16 +570,16 @@ class AtomGroup(Atomic):
         if self._coords is not None:
             arrays[id(self._coords)] = self._coords
         arrays.update(getboth(val)
-                      for key, val in self._data.items() if val is not None)
+                      for key, val in list(self._data.items()) if val is not None)
         if self._bonds is not None:
             arrays[id(self._bonds)] = self._bonds
         if self._flags:
             arrays.update(getboth(val)
-                  for key, val in self._flags.items() if val is not None)
+                  for key, val in list(self._flags.items()) if val is not None)
         if all:
             if self._subsets:
                 arrays.update(getboth(val)
-                      for key, val in self._subsets.items() if val is not None)
+                      for key, val in list(self._subsets.items()) if val is not None)
             if self._fragments:
                 for val in self._fragments:
                     val = getbase(val)
@@ -594,7 +594,7 @@ class AtomGroup(Atomic):
                 arrays.update(getboth(val) if hasattr(val, 'base') else
                     getboth(val._indices) for val in self._hv._segments)
 
-        return sum(getbase(arr).nbytes for arr in arrays.values())
+        return sum(getbase(arr).nbytes for arr in list(arrays.values()))
 
     def numCoordsets(self):
         """Returns number of coordinate sets."""
@@ -1097,7 +1097,7 @@ class AtomGroup(Atomic):
         self._fragments = fragments
 
 
-for fname, field in ATOMIC_FIELDS.items():
+for fname, field in list(ATOMIC_FIELDS.items()):
 
     meth = field.meth_pl
     getMeth = 'get' + meth

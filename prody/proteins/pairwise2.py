@@ -825,11 +825,11 @@ def print_matrix(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix[i])):
             matrixT[j].append(len(str(matrix[i][j])))
-    ndigits = map(max, matrixT)
+    ndigits = list(map(max, matrixT))
     for i in range(len(matrix)):
         #Using string formatting trick to add leading spaces,
-        print(" ".join("%*s " % (ndigits[j], matrix[i][j]) \
-                       for j in range(len(matrix[i]))))
+        print((" ".join("%*s " % (ndigits[j], matrix[i][j]) \
+                       for j in range(len(matrix[i])))))
 
 def format_alignment(align1, align2, score, begin, end):
     """format_alignment(align1, align2, score, begin, end) -> string

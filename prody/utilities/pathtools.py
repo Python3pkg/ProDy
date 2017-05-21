@@ -225,7 +225,7 @@ def gunzip(filename, outname=None):
     else:
         result = None
         try:
-            from StringIO import StringIO
+            from io import StringIO
         except ImportError:
             from io import BytesIO
             buff = gzip_open(BytesIO(filename))
@@ -244,7 +244,7 @@ def gunzip(filename, outname=None):
                         out.write(buff)
                 return outname
         else:
-            from StringIO import StringIO
+            from io import StringIO
             buff = gzip.GzipFile(fileobj=StringIO(filename))
             try:
                 result = buff.read()
@@ -365,9 +365,9 @@ def openDB(filename, *args):
     """Open a database with given *filename*."""
 
     try:
-        import anydbm as dbm
+        import dbm as dbm
     except ImportError:
-        import dbm
+        import dbm.ndbm
     return anydbm.open(filename, *args)
 
 
@@ -389,7 +389,8 @@ def openURL(url, timeout=5, **kwargs):
     for opening the *url*."""
 
     try:
-        from urllib2 import urlopen, URLError, Request
+        from urllib.request import urlopen, Request
+        from urllib.error import URLError
     except ImportError:
         from urllib.request import urlopen, Request
         from urllib.error import URLError

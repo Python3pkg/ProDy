@@ -153,7 +153,7 @@ def confProDy(*args, **kwargs):
         else:
             return values
 
-    for option, value in kwargs.items():
+    for option, value in list(kwargs.items()):
         try:
             default, acceptable, setter = CONFIGURATION[option]
         except KeyError:
@@ -183,8 +183,8 @@ _vals = []
 for _key in _keys:
     default, acceptable, setter = CONFIGURATION[_key]
     try:
-        if not setter.func_name.startswith('_'):
-            seealso = ' See also :func:`.' + setter.func_name + '`.'
+        if not setter.__name__.startswith('_'):
+            seealso = ' See also :func:`.' + setter.__name__ + '`.'
     except AttributeError:
         seealso = ''
 
@@ -245,8 +245,8 @@ def checkUpdates():
         import xmlrpc.client
         pypi = xmlrpc.client.Server('https://pypi.python.org/pypi')
     else:
-        import xmlrpclib
-        pypi = xmlrpclib.Server('https://pypi.python.org/pypi')
+        import xmlrpc.client
+        pypi = xmlrpc.client.Server('https://pypi.python.org/pypi')
     releases = pypi.package_releases('ProDy')
     if releases[0] == __version__:
         LOGGER.info('You are using the latest ProDy release (v{0:s}).'

@@ -5,7 +5,7 @@ try:
     from . import argparse
 except ImportError:
     try:
-        import argparse
+        from . import argparse
     except ImportError:
         raise ImportError('You need argparse module to '
                           'be able to use ProDy apps.')
@@ -63,11 +63,11 @@ class UsageExample(argparse.Action):
         buff = ''
         for line in lines:
             if not line and buff:
-                print('\n'.join(tw.wrap(buff)))
+                print(('\n'.join(tw.wrap(buff))))
                 print('')
                 buff = ''
             elif line.startswith('$'):
-                print('  ' + line)
+                print(('  ' + line))
                 print('')
             else:
                 if buff:
@@ -92,7 +92,7 @@ class ProDyVersion(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
 
         import prody
-        print("ProDy " + prody.__version__)
+        print(("ProDy " + prody.__version__))
         parser.exit()
 
 
@@ -264,7 +264,7 @@ class DevelApp(object):
             for arg in self._figargs:
                 group.add_argument(*arg, **self._getKwargs(arg))
 
-            for arg in FIGARGS.keys():
+            for arg in list(FIGARGS.keys()):
                 group.add_argument(*arg, **self._getKwargs(arg))
 
         positional = [(arg[0], self._args[arg].get('nargs', None))

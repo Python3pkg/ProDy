@@ -338,8 +338,8 @@ def showSCAMatrix(scainfo, *args, **kwargs):
 if __name__ == '__main__':
     from prody import *
     msa = parseMSA('piwi_seed.sth')
-    print(repr(msa))
+    print((repr(msa)))
     msa = refineMSA(msa, label=msa[0][0])
-    print(repr(msa))
-    print(calcMSAOccupancy(msa, 'row', count=True))
-    print(pickSequence(msa))
+    print((repr(msa)))
+    print((calcMSAOccupancy(msa, 'row', count=True)))
+    print((pickSequence(msa)))

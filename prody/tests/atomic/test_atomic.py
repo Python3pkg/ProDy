@@ -126,5 +126,5 @@ class TestAtomIterations(unittest.TestCase):
 
     def testAtomMap(self):
 
-        sel = AtomMap(ATOMS, range(10), mapping=range(10), dummies=[10,11])
+        sel = AtomMap(ATOMS, list(range(10)), mapping=list(range(10)), dummies=[10,11])
         self.assertEqual(len(list(sel.iterAtoms())), sel.numAtoms())

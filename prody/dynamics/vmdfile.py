@@ -125,7 +125,7 @@ def writeVMDstiffness(model, pdb, indices, k_range, filename='vmd_out', \
     
     color_nr = 1 # starting from red color in VMD
     ResCounter = []
-    for r in xrange(indices0, indices1+1):
+    for r in range(indices0, indices1+1):
         baza_col = [] # Value of Kij is here for each residue
         nr_baza_col = [] # Resid of aa are here
         out.write("draw color "+str(colors[color_nr])+"\n")
@@ -214,7 +214,7 @@ def writeDeformProfile(model, pdb, filename='dp_out', selstr='protein and name C
     
     meanStiff_all = []        
     for i in range(coords.numAtoms()):
-         meanStiff_all.extend(aa_counter.values()[i]*[round(meanSiff[i], 2)])
+         meanStiff_all.extend(list(aa_counter.values())[i]*[round(meanSiff[i], 2)])
         
     kw = {'occupancy': meanStiff_all}
     writePDB(filename, pdb, **kw)                
@@ -336,7 +336,7 @@ def calcChainsNormDistFluct(coords, ch1, ch2, cutoff=10., percent=5, rangeAng=5,
             out_tcl.write('mol material Opaque \n')
             #out_tcl.write('mol addrep 0\n')
         
-        LOGGER.info('Finded residues in {0}: {1}'.format(mmRange.keys()[nr_j],\
+        LOGGER.info('Finded residues in {0}: {1}'.format(list(mmRange.keys())[nr_j],\
                     len(list(set(vmd_ch_list[1])))+len(list(set(vmd_ch_list[0])))))
         LOGGER.info('chain {0} and resid {1}'.format(ch[0], \
                        str(list(set(vmd_ch_list[0]))).replace(',','')[1:-1]))

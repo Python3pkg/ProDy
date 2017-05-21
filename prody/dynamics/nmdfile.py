@@ -141,7 +141,7 @@ def pathVMD(*path):
                 if PY3K:
                     import winreg
                 else:
-                    import _winreg as winreg  # PY3K: OK
+                    import winreg as winreg  # PY3K: OK
                 for vmdversion in ('1.8.7', '1.9', '1.9.1'):
                     try:
                         key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,
@@ -258,7 +258,7 @@ def parseNMD(filename, type=None):
 
     from prody.atomic import ATOMIC_FIELDS
 
-    for label, data in atomic.items():  # PY3K: OK
+    for label, data in list(atomic.items()):  # PY3K: OK
         if data is None:
             continue
         line, data = data

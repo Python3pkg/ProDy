@@ -281,11 +281,11 @@ def showProjection(ensemble, modes, *args, **kwargs):
         text = show.text
 
     indict = defaultdict(list)
-    for i, opts in enumerate(zip(markers, colors, labels)):  # PY3K: OK
+    for i, opts in enumerate(list(zip(markers, colors, labels))):  # PY3K: OK
         indict[opts].append(i)
 
     args = list(args)
-    for opts, indices in indict.items():  # PY3K: OK
+    for opts, indices in list(indict.items()):  # PY3K: OK
         marker, color, label = opts
         kwargs['marker'] = marker
         kwargs['color'] = color
@@ -400,10 +400,10 @@ def showCrossProjection(ensemble, mode_x, mode_y, scale=None, *args, **kwargs):
         size = kwargs.pop('fontsize', None) or kwargs.pop('size', None)
 
     indict = defaultdict(list)
-    for i, opts in enumerate(zip(markers, colors, labels)):  # PY3K: OK
+    for i, opts in enumerate(list(zip(markers, colors, labels))):  # PY3K: OK
         indict[opts].append(i)
 
-    for opts, indices in indict.items():  # PY3K: OK
+    for opts, indices in list(indict.items()):  # PY3K: OK
         marker, color, label = opts
         kwargs['marker'] = marker
         kwargs['color'] = color
@@ -965,13 +965,13 @@ def showPerturbResponse(**kwargs):
             borders.append(borders[n] + len(list(hv)[n].getResnums()))
 
             plt.subplot(2,2,2)
-            plt.barh(range(borders[n],borders[n+1]), \
+            plt.barh(list(range(borders[n],borders[n+1])), \
                      effectiveness[borders[n]:borders[n+1]], \
                      color=chain_colors[n], \
                      edgecolor=chain_colors[n])
 
             plt.subplot(2,2,3)
-            plt.bar(range(borders[n],borders[n+1]), \
+            plt.bar(list(range(borders[n],borders[n+1])), \
                     sensitivity[borders[n]:borders[n+1]], \
                     color=chain_colors[n], \
                     edgecolor=chain_colors[n])
@@ -980,8 +980,8 @@ def showPerturbResponse(**kwargs):
         plt.subplot(2,2,3); plt.axis([0,borders[-1],0,np.max(sensitivity)])
 
     else:
-        plt.subplot(2,2,2); plt.bar(effectiveness,range(len(effectiveness)))
-        plt.subplot(2,2,3); plt.barh(sensitivity,range(len(sensitivity)))
+        plt.subplot(2,2,2); plt.bar(effectiveness,list(range(len(effectiveness))))
+        plt.subplot(2,2,3); plt.barh(sensitivity,list(range(len(sensitivity))))
 
     returnData = kwargs.get('returnData',False)
     if not returnData:
@@ -1123,7 +1123,7 @@ def showPerturbResponseProfiles(prs_matrix,atoms,**kwargs):
         plt.figure()
         for n in range(len(borders)-1):
             if not overlay:
-                plt.plot(range(borders[n],borders[n+1]), \
+                plt.plot(list(range(borders[n],borders[n+1])), \
                          profile[borders[n]:borders[n+1]], \
                          color=chain_colors[n])
             else:

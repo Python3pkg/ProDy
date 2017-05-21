@@ -173,14 +173,14 @@ CATEGORIES = {
 }
 
 CATEGORIZED = {}
-for catgroup in CATEGORIES.values():
+for catgroup in list(CATEGORIES.values()):
     for category in catgroup:
         CATEGORIZED[category] = list(DEFAULTS[category])
 INDEPENDENT = list(CATEGORIZED)
 CATEGORIZED['charged'] = list(CATEGORIZED['acidic'])
 CATEGORIZED['charged'].extend(CATEGORIZED['basic'])
 
-for resi, cats in NONSTANDARD.items():
+for resi, cats in list(NONSTANDARD.items()):
     for cat in cats:
         CATEGORIZED[cat].append(resi)
 
@@ -724,7 +724,7 @@ def updateDefinitions():
         DEFINITIONS['charged'] = set(DEFINITIONS['acidic'])
         DEFINITIONS['charged'].update(DEFINITIONS['basic'])
 
-        for resi, props in nonstd.items():
+        for resi, props in list(nonstd.items()):
             for prop in props:
                 DEFINITIONS[prop].add(resi)
 
@@ -1078,7 +1078,7 @@ def addNonstdAminoacid(resname, *properties):
         LOGGER.warn('Residue name {0} is unusually long.'
                     .format(repr(resname)))
     propset = set(properties)
-    for cat, val in CATEGORIES.items():
+    for cat, val in list(CATEGORIES.items()):
         intersection = val.intersection(propset)
         if intersection:
             if len(intersection) > 1:
@@ -1100,7 +1100,7 @@ INDEPENDENT.sort()
 addNonstdAminoacid.__doc__ = addNonstdAminoacid.__doc__.format(
     props='\n      * '.join([
         '*{0}*: {1}'.format(cat, joinTerms(terms, last=', or ', sort=True))
-        for cat, terms in CATEGORIES.items()
+        for cat, terms in list(CATEGORIES.items())
     ])
 )
 

@@ -153,7 +153,7 @@ class Sequence(object):
                             'resnums 1 to {0:d}'.format(self.numResidues()))
                 start, end = 1, self.numResidues()
 
-        resnums = iter(range(start, end + 1))
+        resnums = iter(list(range(start, end + 1)))
         if gaps:
             return [next(resnums) if torf else None
                     for torf in char.isalpha(self._array)]

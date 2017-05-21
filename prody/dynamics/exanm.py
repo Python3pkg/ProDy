@@ -132,7 +132,7 @@ class exANM(ANMBase):
 
         self._membrane = AtomGroup(title="Membrane")
         self._membrane.setCoords(membrane)
-        self._membrane.setResnums(range(atm))
+        self._membrane.setResnums(list(range(atm)))
         self._membrane.setResnames(["NE1" for i in range(atm)])
         self._membrane.setChids(["Q" for i in range(atm)])
         self._membrane.setElements(["Q1" for i in range(atm)])

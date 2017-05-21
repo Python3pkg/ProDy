@@ -71,7 +71,7 @@ i.e. ``""``.
 """
 
 try:
-    from sys import maxint as DUMMY
+    from sys import maxsize as DUMMY
 except ImportError:
     from sys import maxsize as DUMMY
 
@@ -380,7 +380,7 @@ class AtomMap(AtomPointer):
         return 'index ' + rangeString(self._indices)
 
 
-for fname, field in ATOMIC_FIELDS.items():
+for fname, field in list(ATOMIC_FIELDS.items()):
 
     if field.private:
         continue

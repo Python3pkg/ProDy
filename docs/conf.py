@@ -30,8 +30,8 @@ extensions.extend(
 source_suffix = '.rst'
 master_doc = 'index'
 
-project = u'ProDy'
-copyright = u'2010-2014, University of Pittsburgh'
+project = 'ProDy'
+copyright = '2010-2014, University of Pittsburgh'
 
 
 __version__ = ''
@@ -124,8 +124,8 @@ latex_font_size = '10pt'
 
 latex_documents = [
     ('index', 'ProDy.tex',
-     u'ProDy Documentation',
-     u'Ahmet Bakan', 'manual')
+     'ProDy Documentation',
+     'Ahmet Bakan', 'manual')
 ]
 
 latex_logo = '_static/logo.png'
@@ -161,7 +161,7 @@ intersphinx_mapping = {
     'prodywebsite': ('http://prody.csb.pitt.edu/', None),
 }
 
-rst_epilog = u"""
+rst_epilog = """
 
 .. _ProDy: http://prody.csb.pitt.edu
 .. _Tutorials: http://prody.csb.pitt.edu/tutorials

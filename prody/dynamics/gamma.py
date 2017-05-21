@@ -294,8 +294,8 @@ class GammaVariableCutoff(Gamma):
         else:
             gamma = 0
         if self._debug:
-            print(' '.join([self._identifiers[i] + '_' + str(i), '--',
+            print((' '.join([self._identifiers[i] + '_' + str(i), '--',
                   self._identifiers[j] + '_' + str(j),
                   'effective cutoff:', str(cutoff), 'distance:',
-                  str(dist2**0.5), 'gamma:', str(gamma)]))  # PY3K: OK
+                  str(dist2**0.5), 'gamma:', str(gamma)])))  # PY3K: OK
         return gamma

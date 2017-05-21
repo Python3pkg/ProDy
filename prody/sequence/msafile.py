@@ -12,6 +12,7 @@ from .sequence import splitSeqLabel, Sequence
 
 from prody import LOGGER
 from prody.utilities import openFile
+import collections
 
 __all__ = ['MSAFile', 'splitSeqLabel', 'parseMSA', 'writeMSA']
 
@@ -172,11 +173,11 @@ class MSAFile(object):
         else:
             if self._filter_full:
                 for seq, label in self._iter:
-                    if filter(label, seq):
+                    if list(filter(label, seq)):
                         yield Sequence(slicer(seq), label)
             else:
                 for seq, label in self._iter:
-                    if filter(splitSeqLabel(label)[0], seq):
+                    if list(filter(splitSeqLabel(label)[0], seq)):
                         yield Sequence(slicer(seq), label)
 
     def __str__(self):
@@ -206,7 +207,7 @@ class MSAFile(object):
         if self._closed:
             raise ValueError('I/O operation on closed file')
         import sys
-        size = size or sys.maxint
+        size = size or sys.maxsize
         lines = []
         append = lines.append
         readline = self._stream.readline
@@ -384,11 +385,11 @@ class MSAFile(object):
             self._filter = None
             return
 
-        if not callable(filter):
+        if not isinstance(filter, collections.Callable):
             raise TypeError('filter must be callable')
 
         try:
-            result = filter('TEST_TITLE', 'SEQUENCE-WITH-GAPS')
+            result = list(filter('TEST_TITLE', 'SEQUENCE-WITH-GAPS'))
         except Exception as err:
             raise TypeError('filter function must not raise exceptions, '
                             'e.g. ' + str(err))

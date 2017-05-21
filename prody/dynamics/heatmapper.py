@@ -209,7 +209,7 @@ def writeHeatmap(filename, heatmap, **kwargs):
 
     numbering = []
     numlabels = []
-    for key, val in kwargs.items():
+    for key, val in list(kwargs.items()):
         try:
             length = len(val)
         except TypeError:
